@@ -5,8 +5,9 @@ const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const sessions = require('express-session');
 const { v4: uuidv4 } = require('uuid');
+const cors = require('cors');
 
-const PORT = 3000;
+const PORT = 4000;
 
 let connection = mysql.createConnection({
     host: 'localhost',
@@ -18,6 +19,8 @@ let connection = mysql.createConnection({
 connection.connect();
 
 const oneDay = 1000 * 60 * 60 * 24;
+
+app.use(cors());
 
 app.use(
     sessions({
