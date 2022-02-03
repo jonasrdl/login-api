@@ -17,12 +17,6 @@ let connection = mysql.createConnection({
 
 connection.connect();
 
-/* 
-register: username, password -> true / false
-login: username, password -> true / false, sessionid
-logout: session -> true / false
-*/
-
 const oneDay = 1000 * 60 * 60 * 24;
 
 app.use(
