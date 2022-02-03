@@ -30,8 +30,6 @@ app.use(
 
 app.use(cookieParser());
 
-let session;
-
 app.get('/', (req, res) => {
     connection.query(
         `SELECT * FROM sessions WHERE sessionid = '${req.cookies.session}'`,
@@ -57,10 +55,11 @@ app.get('/', (req, res) => {
 app.post('/register', (req, res) => {
     const username = req.header('username');
     const password = req.header('password');
+    const email = req.header('email');
 
     bcrypt.hash(password, 10, function (err, hash) {
         connection.query(
-            `INSERT INTO users (id, username, password) VALUES (NULL, '${username}', '${hash}')`,
+            `INSERT INTO users (id, username, password, email) VALUES (NULL, '${username}', '${hash}', '${email}')`,
             function (error, results, fields) {
                 if (error) throw error;
 
@@ -73,6 +72,7 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
     const username = req.header('username').toLowerCase();
     const password = req.header('password');
+    const email = req.header('email');
 
     connection.query(
         `SELECT * FROM users WHERE LOWER(username) = '${username}'`,
